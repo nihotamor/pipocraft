@@ -44,30 +44,11 @@ public class ItemTimeNet extends ItemTool {
 
     @Override
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        Random random = new Random(target.getEntityWorld().getSeed() * 2 - 0x3603);
-        int x = random.nextInt(16384) - 8192, y = 255, z = random.nextInt(16384) - 8192;
-        boolean foundDestination = false;
-        for (int i = 0; i < 1000; i++) {
-            if (new Chunk(target.getEntityWorld(), x / 16, z / 16).isLoaded()) {
-                foundDestination = true;
-                break;
-            }
-            x = random.nextInt(16384) - 8192;
-            z = random.nextInt(16384) - 8192;
-        }
-        if (!foundDestination) {
-            x = z = 0;
-        }
+        double x = target.posX;
+        double y = target.posY;
+        double z = target.posZ;
 
-        for (int i = y; i > 0; i--) {
-            if (target.getEntityWorld().getBlockState(new BlockPos(x, i, z)).getBlock() != Blocks.AIR) {
-                y = i + 1;
-                break;
-            }
-        }
-        if (stack == null) {
-            return false;
-        }
+
         NBTTagCompound tag = stack.getTagCompound();
         if (tag != null) {
             tag = tag.getCompoundTag(Ref.TAG_PIPOCRAFT);

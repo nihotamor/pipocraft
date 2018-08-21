@@ -7,6 +7,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
 
@@ -53,10 +55,27 @@ public class TileEntityTransferMachine extends TileEntity implements IInventory 
 
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        NBTTagCompound tag = itemSet.get(0).getTagCompound();
+        getUpdatePacket();
+        //NBTTagCompound tag = new NBTTagCompound();
+        //if (itemSet.get(0).hasTagCompound()) {
+        //    tag = itemSet.get(0).getTagCompound().copy();
+        //}
         ItemStack stack = ItemStackHelper.getAndSplit(this.itemSet, index, count);
-        stack.setTagCompound(tag);
+        //stack.setTagCompound(tag);
         return stack;
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        NBTTagCompound tag = new NBTTagCompound();
+        this.writeToNBT(tag);
+        return new SPacketUpdateTileEntity(this.pos, 1, tag);
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
+        super.onDataPacket(net, pkt);
     }
 
     @Override

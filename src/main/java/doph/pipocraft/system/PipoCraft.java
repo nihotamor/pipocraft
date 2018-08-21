@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 
 @Mod(modid = Ref.MODID, name = Ref.MODNAME, version = Ref.MODVERSION)
+
 public class PipoCraft {
     @SidedProxy(clientSide = Ref.CLIENTPROXY, serverSide = Ref.COMMONPROXY)
     private static CommonProxy proxy;

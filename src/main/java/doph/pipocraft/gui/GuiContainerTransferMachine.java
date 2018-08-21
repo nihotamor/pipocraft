@@ -5,6 +5,7 @@ import java.io.IOException;
 import doph.pipocraft.init.PCItems;
 import doph.pipocraft.system.Ref;
 import doph.pipocraft.tileentity.TileEntityTransferMachine;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +13,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -57,7 +60,6 @@ public class GuiContainerTransferMachine extends GuiContainer {
             }else {
                 stack.setTagCompound(tag2);
             }
-            inventory.markDirty();
         }
     }
 
